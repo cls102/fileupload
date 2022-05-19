@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodingPhase JS Workshop 9 &ndash; 4-14-22</title>
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --addon-width: 24px;
+        --bg: #efefef;
+        --primary: #2196f3;
+        --primary-hover: #1981d6;
+        --text: rgba(0, 0, 0, 0.8);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      body {
+        overflow: hidden;
+        overflow-y: auto;
+        font-family: Arial, Helvetica, sans-serif;
+        font-family: "Poppins", sans-serif;
+        background: #ffffff;
+        text-align: center;
+        background-image: url("img.jpg");
+        background-position: bottom;
+      }
+      .container {
+        /* background-color: #f6f6f6; */
+        width: 75%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .container-two {
+        /* background-color: #f6f6f6; */
+        /* background-image: url("img.jpg");
+        background-position: bottom; */
+        height: 100vh;
+      }
+      .file-container {
+        background-color: #ffffff;
+        width: 50%;
+        height: 75vh;
+        padding: 40px 50px 20px;
+        margin: 50px auto;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .file-upload-container {
+        display: flex;
+      }
+
+    
+      .file-upload {
+        /* width: 40%; */
+        display: flex;
+        /* flex-direction: column; */
+        justify-content: center;
+        /* background-color: oldlace; */
+        align-items: center;
+        gap: 40px;
+      }
+      button,
+      .btn {
+        appearance: none;
+        -webkit-appearance: none;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 1.5rem;
+        background-color: #979797;
+        color: rgba(255, 255, 255, 1);
+        cursor: pointer;
+        font-weight: 600;
+        font-family: "Poppins", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.08rem;
+        transition: all 0.5s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #e9e9e9fc;
+        color: #979797;
+      }
+
+      button.disabled {
+        background-color: #ccc;
+      }
+      button.success {
+        background-color: #29af4f;
+      }
+
+      .clear {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background-color: var(--primary);
+        padding: 0.5rem 0.5rem 0.35rem;
+        border-radius: 0.5rem;
+        letter-spacing: 0.1rem;
+        color: rgba(255, 255, 255, 0.86);
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 600;
+        line-height: 1;
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
+      .clear:hover {
+        background-color: var(--primary-hover);
+      }
+      .console {
+        position: relative;
+        width: 100%;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        background: var(--bg);
+        z-index: 0;
+        margin-top: 2rem;
+      }
+
+      body > img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .preview {
+        width: 15%;
+        height: 65px;
+        position: relative;
+        border-radius: 50%;
+        overflow: hidden;
+        /* border: 5px solid #dfe4e8; */
+        /* margin-top: 2rem; */
+        background: white;
+        filter: drop-shadow(0 2px 2px rgba(198, 197, 197, 0.55));
+      }
+
+      .preview img {
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .header {
+        font-size: 1.75rem;
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 1rem auto 0.5rem;
+        line-height: 1;
+        color: #979797;
+      }
+      .header svg,
+      .header img {
+        height: 7rem;
+        width: auto;
+      }
+      .sub-header {
+        font-size: 2.75rem;
+        margin: 4rem 0 1rem;
+      }
+      .sub-header-content {
+        font-size: 1.75rem;
+        padding: 0 2rem;
+      }
+      .sub-header-content ul {
+        padding-left: 2rem;
+      }
+
+      .sub-header-content + img {
+        display: block;
+        margin: 0 auto;
+      }
+
+      .sub-header-content + ul,
+      .sub-header-content + ol {
+        padding: 1rem 4rem;
+      }
+      .sub-header-content + ul ul,
+      .sub-header-content ~ pre,
+      .sub-header-content + ol ul {
+        list-style: disc;
+        margin-left: 2rem;
+      }
+      /* .sub-header-content + ol > li {
+        margin-bottom: 2rem;
+      } */
+      .sub-header-content + ol ul {
+        padding: 1rem 0;
+      }
+      .sub-header-content + ul pre code,
+      .sub-header-content + ol pre code,
+      .sub-header-content + ol ul pre code {
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+      }
+      pre {
+        display: inline;
+      }
+
+      pre code {
+        display: inline-block;
+        margin: 0.5rem 0 2rem;
+      }
+
+      span pre code {
+        margin-bottom: 0.5rem;
+      }
+
+      .btns {
+        position: fixed;
+        top: 5vh;
+        right: 0;
+        background: white;
+        border-top-left-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+        padding: 1rem;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+        display: flex;
+        flex-direction: column;
+      }
+      .btns button:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+      .sub-header-content + ul {
+        list-style: disc;
+      }
+
+      .input-one,
+      .input-three {
+        background-color: #cccccc;
+        background-color: #ececec;
+        /* background-color: #a29bfe; */
+      }
+      .input-two,
+      .input-four {
+        background-color: #ececec;
+        /* background-color: #a29bfe; */
+      }
+
+      input[type="file"] {
+        display: block;
+        width: 50%;
+        border-radius: 10px;
+        outline: none;
+        color: #6f3535;
+        font-family: "Poppins", sans-serif;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        /* border: 2px solid green; */
+      }
+      input[type="file"]::file-selector-button {
+        border: none;
+        /* border: 2px solid #6c5ce7; */
+        /* border: none; */
+        padding: 0.4em 0.6em;
+        border-radius: 0.2em;
+        background-color: #a29bfe;
+        transition: 1s;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+      }
+      input[type="file"]::file-selector-button:hover {
+        background-color: #81ecec;
+        /* border: 2px solid #00cec9; */
+      }
+
+      form {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .animation {
+        opacity: 0;
+        width: 20px;
+        height: 20px;
+        background-color: #c8e2d9;
+        cursor: pointer;
+        border-radius: 10px;
+        position: absolute;
+        top: 162px;
+        left: 565px;
+        /* display: none; */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container-two">
+        <div class="file-container">
+          <h1 class="header">File Upload 📂📁</h1>
+
+          <!-- <label for="file_input" class="btn">Choose File</label> -->
+          <!-- <div class="file-upload-container"> -->
+          <div class="file-upload">
+            <div class="preview">
+              <img
+                id="preview"
+                src="https://via.placeholder.com/468x60?text=1"
+              />
+            </div>
+            <input
+              class="input input-one"
+              type="file"
+              name="file_input"
+              id="file_input"
+              multiple
+            />
+            <div class="animation" id="upload"></div>
+          </div>
+          <div class="file-upload">
+            <div class="preview">
+              <img
+                id="preview"
+                src="https://via.placeholder.com/468x60?text=2"
+              />
+            </div>
+            <input
+              class="input input-two"
+              type="file"
+              name="file_input"
+              id="file_input"
+              multiple
+            />
+          </div>
+          <div class="file-upload">
+            <div class="preview">
+              <img
+                id="preview"
+                src="https://via.placeholder.com/468x60?text=3"
+              />
+            </div>
+            <input
+              class="input input-three"
+              type="file"
+              name="file_input"
+              id="file_input"
+              multiple
+            />
+          </div>
+          <!-- <div class="file-upload">
+            <div class="preview">
+              <img
+                id="preview"
+                src="https://via.placeholder.com/468x60?text=4"
+              />
+            </div>
+            <input
+              class="input input-four"
+              type="file"
+              name="file_input"
+              id="file_input"
+              multiple
+            />
+          </div> -->
+          <!-- </div> -->
+          <form
+            action="/upload.php"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <!-- button -->
+            <!-- <input type="file" id="file_in_form" name="file_in_form" /> -->
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const updateProgress = {};
+      const fileInput = document.getElementById("file_input");
+      const fileInForm = document.getElementById("file_in_form");
+
+      const onFilesAdded = (files) => {
+        let filesToAdd = files.filter((file) => file.size < 50000000),
+          rejected = [];
+        if (files.length !== filesToAdd.length) {
+          rejected = differenceBy(files, filesToAdd);
+        }
+        let newProgress = {};
+        filesToAdd.forEach((file) => {});
+      };
+      const handleFile = (e, preview = "preview") => {
+        const files = e.target.files;
+        console.log(
+          "🚀 ~ file: index.html ~ line 183 ~ handleFile ~ file",
+          files
+        );
+        let reader = new FileReader();
+
+        reader.addEventListener(
+          "load",
+          function () {
+            // convert image file to base64 string
+            document.getElementById(preview).setAttribute("src", reader.result);
+            document.getElementById(preview).style.objectFit = "cover";
+            document.getElementById(preview).style.width = "50px";
+            document.getElementById(preview).style.height = "50px";
+            // document.getElementById(preview).classList.add("animation");
+            document.getElementById(preview).style.zIndex = "21";
+            // document.getElementById("upload").classList.add("animation");
+            document.getElementById("upload").style.opacity = "1";
+            document.getElementById("upload").textContent = "x";
+            document.getElementById("upload").style.fontSize = "12px";
+            document.getElementById("upload").style.fontWeight = "600";
+            document.getElementById("upload").style.color = "#7e7d7b";
+          },
+          false
+        );
+        reader.readAsDataURL(files[0]);
+      };
+
+      // let style = document.getElementById("style");
+      // let plus = document.getElementById("plus");
+      function changeStyle() {
+        if (
+          document.getElementById(preview).classList.contains("animation") !==
+          true
+        ) {
+          document.getElementById(preview).classList.add("animation");
+          document.getElementById(preview).style.backgroundColor = "orange";
+        } else {
+          document.getElementById(preview).classList.remove("animation");
+        }
+        if (plus.textContent == "+") {
+          // plus.style.backgroundColor = "orange";
+          plus.textContent = "-";
+        } else {
+          // plus.style.backgroundColor = "black"
+          plus.textContent = "+";
+        }
+      }
+
+      const uploadFiles = (file) => {
+        return new Promise((resolve, reject) => {
+          const req = new XMLHttpRequest();
+
+          req.upload.addEventListener("progress", (event) => {
+            if (event.lengthComputable) {
+              const copy = { ...uploadProgress };
+              copy[file.name] = {
+                state: "pending",
+                percentage: (event.loaded / event.total) * 100,
+              };
+            }
+          });
+
+          req.upload.addEventListener("load", function (e) {
+            const copy = { ...uploadProgress };
+            copy[file.name] = { state: "done", percentage: 100 };
+            resolve(req.response);
+          });
+
+          req.upload.addEventListener("error", (event) => {
+            const copy = { ...uploadProgress };
+            copy[file.name] = { state: "error", percentage: 0 };
+            reject(req.response);
+          });
+
+          const formData = new FormData();
+          formData.append("file", file, file.name);
+          formData.append("folder", folder);
+
+          req.open("POST", "http://localhost:5003/api/upload");
+
+          req.send(formData);
+
+          req.onload = () => {
+            let data = JSON.parse(req.response);
+          };
+        });
+      };
+
+      fileInput.addEventListener("change", handleFile);
+      fileInForm.addEventListener("change", (e) => {
+        handleFile(e, "preview2");
+      });
+    </script>
+  </body>
+</html>
